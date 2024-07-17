@@ -1,0 +1,37 @@
+import pandas as pd; #import pandas to work and clean up the dataset
+from sklearn.tree import DecisionTreeClassifier; 
+from sklearn.model_selection import train_test_split;
+from sklearn.metrics import accuracy_score, classification_report;
+
+dataset = pd.read_csv('music_data.csv');
+# print(dataset)
+
+#####Clean up the Dataset#########
+# print(dataset.describe())
+
+# print(dataset.shape);
+
+#Splitting dataset into input and output columns
+
+X = dataset[["age", "gender"]]; #Input Column
+y = dataset[["genre"]]; #Output Column 
+
+#Split dataset for training and testing for both Input and Output Columns
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2); # Training - 80% Testing - 20%
+# print(X_train, y_train);
+
+#Importing model and Training the model - Decision Tree
+
+model = DecisionTreeClassifier(); #Creating an instance of the model imported
+model.fit(X_train, y_train);
+predictions = model.predict(X_test);
+print(y_test)
+print(predictions);
+
+#Calculating the accuracy of the model 
+accuracy = accuracy_score(y_test, predictions);
+accuracy
+ 
+report = classification_report(y_test, predictions)
+print('Classification Report:\n', report)
